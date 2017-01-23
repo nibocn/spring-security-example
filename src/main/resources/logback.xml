@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 日志格式 -->
+    <property name="log_format" value="%d [%t] %-5p [%c:%L] - %m%n"/>
+
+    <!-- 通过环境变量读取运行环境值，dev、product -->
+    <!--<include resource="logback.${profiles.active}.xml"/>-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${log_format}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 按时间滚动的策略生成日志 -->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${catalina.base}/logs/spring-security-examepl/log-%d{yyyy-MM-dd}.%i.log.zip
+            </fileNamePattern>
+            <!-- 日志归档文件保存天数 -->
+            <maxHistory>365</maxHistory>
+            <!-- 每个日志文件最大10M -->
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log_format}</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="console"/>
+        <!--<appender-ref ref="file"/>-->
+    </root>
+    <logger name="me.nibo" level="DEBUG"/>
+</configuration>
