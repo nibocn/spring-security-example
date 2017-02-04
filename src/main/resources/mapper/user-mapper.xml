@@ -4,6 +4,21 @@
 <mapper namespace="me.nibo.spring.security.dao.UserMapper">
 
     <insert id="insert" parameterType="me.nibo.spring.security.model.User">
-        insert into USER_INFO values (#{id}, #{name}, #{password});
+        INSERT INTO USER_INFO VALUES (#{id}, #{name}, #{password});
     </insert>
+    <select id="get" resultType="me.nibo.spring.security.model.User">
+        SELECT
+            t.ID        AS id,
+            t.USER_NAME AS name,
+            t.PASSWORD  AS password
+        FROM USER_INFO t
+        WHERE t.USER_NAME = #{username}
+    </select>
+    <select id="query" resultType="me.nibo.spring.security.model.User">
+        SELECT
+            t.ID        AS id,
+            t.USER_NAME AS name,
+            t.PASSWORD  AS password
+        FROM USER_INFO t
+    </select>
 </mapper>
